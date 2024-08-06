@@ -11,6 +11,7 @@
     <style>
         #myModal .modal-dialog{
             max-width: 70%;
+            margin-left: 15%;
         }
 
         #myTabContent{
@@ -25,26 +26,26 @@
 </head>
 
 <body>
-    <div class="container mt-5">
-        <h2 class="mb-4">合肥星越L车友会会标号查询/添加网站</h2>
+       <div class="container mt-5">
+        <h2 class="mb-4">合肥星越L车友会会标号查询/申请网站</h2>
+        <h5 class="mb-4">会标团购价：￥35</h5>
         {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        <div class="alert alert-dismissible fade show" role="alert">
-            {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
-        </div>
-        {% endif %}
+            {% if messages %}
+                <div class="alert alert-dismissible fade show" role="alert">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
         {% endwith %}
         <form method="POST" action="/">
             <div class="form-group">
-                <label for="nickname">昵称</label>
+                <label for="nickname">姓名（昵称）</label>
                 <input type="text" class="form-control" id="nickname" name="nickname" required>
             </div>
             <div class="form-group">
                 <label for="car_plate">车牌号</label>
-                <input type="text" class="form-control" id="car_plate" name="car_plate"
-                    placeholder="第一位为中文字符，后六位为字母或数字。" required>
+                <input type="text" class="form-control" id="car_plate" name="car_plate" placeholder="第一位为中文字符，后六位为字母或数字" required>
             </div>
             <div class="form-group">
                 <label for="badge_number">车友会会标号</label>
@@ -56,24 +57,33 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">提交</button>
+            <button type="submit" class="btn btn-primary">提交申请</button>
+        </form>
+        <hr>
+        <h3 class="mt-4">会标号搜索</h3>
+        <form method="POST" action="/">
+            <div class="form-group">
+<!--                <label for="search_badge">会标号</label>-->
+                <input type="text" class="form-control" id="search_badge" name="search_badge" placeholder="三位数字">
+            </div>
+            <button type="submit" class="btn btn-secondary">搜索</button>
         </form>
         <hr>
         <h3 class="mt-4">已被使用的会标号</h3>
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>序号</th>
+<!--                    <th>序号</th>-->
                     <th>姓名（昵称）</th>
                     <th>车牌号</th>
                     <th>车友会会标号</th>
-                    <th>添加时间</th>
+                    <th>时间戳</th>
                 </tr>
             </thead>
             <tbody>
                 {% for row in car_club_data %}
                 <tr>
-                    <td>{{ row.id }}</td>
+<!--                    <td>{{ row.id }}</td>-->
                     <td>{{ row.nickname }}</td>
                     <td>{{ row.car_plate }}</td>
                     <td>{{ row.badge_number }}</td>
@@ -82,6 +92,10 @@
                 {% endfor %}
             </tbody>
         </table>
+<!--        分页-->
+        <div class="d-flex justify-content-center">
+            {{ pagination.links }}
+        </div>
     </div>
 
     <!-- 模态框（Modal） -->

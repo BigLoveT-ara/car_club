@@ -2,8 +2,8 @@ import os
 
 class Config:
     SECRET_KEY = os.urandom(24)
-    MYSQL_HOST = '127.0.0.1'  # 确保这是正确的MySQL服务器地址
+    MYSQL_HOST = '42.192.226.15'  # 确保这是正确的MySQL服务器地址
     MYSQL_USER = 'root'
-    MYSQL_PASSWORD = 'password'
-    MYSQL_DB = 'dbname'
+    MYSQL_PASSWORD = 'Mysql@123'
+    MYSQL_DB = 'carclub_db'
     MYSQL_CURSORCLASS = 'DictCursor'
