@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合肥星越L车友会</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        #myModal .modal-dialog{
+            max-width: 70%;
+        }
+
+        #myTabContent{
+            margin-top: 20px;
+        }
+
+        .badge-tag-btn{
+            margin-left: 10px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">合肥星越L车友会会标号查询/添加网站</h2>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="alert alert-dismissible fade show" role="alert">
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <form method="POST" action="/">
+            <div class="form-group">
+                <label for="nickname">昵称</label>
+                <input type="text" class="form-control" id="nickname" name="nickname" required>
+            </div>
+            <div class="form-group">
+                <label for="car_plate">车牌号</label>
+                <input type="text" class="form-control" id="car_plate" name="car_plate"
+                    placeholder="第一位为中文字符，后六位为字母或数字。" required>
+            </div>
+            <div class="form-group">
+                <label for="badge_number">车友会会标号</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="badge_number" name="badge_number"
+                        placeholder="会标号必须为三位数字" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" id="btn_query_badge" type="button">会员号选号</button>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">提交</button>
+        </form>
+        <hr>
+        <h3 class="mt-4">已被使用的会标号</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>姓名（昵称）</th>
+                    <th>车牌号</th>
+                    <th>车友会会标号</th>
+                    <th>添加时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in car_club_data %}
+                <tr>
+                    <td>{{ row.id }}</td>
+                    <td>{{ row.nickname }}</td>
+                    <td>{{ row.car_plate }}</td>
+                    <td>{{ row.badge_number }}</td>
+                    <td>{{ row.timestamp }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">可用号码</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#n0" role="tab" aria-controls="n0" aria-selected="true">0xx</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#n1" role="tab" aria-controls="n1" aria-selected="false">1xx</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="contact-tab" data-toggle="tab" href="#n2" role="tab" aria-controls="n2" aria-selected="false">2xx</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#n3" role="tab" aria-controls="n3" aria-selected="false">3xx</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#n4" role="tab" aria-controls="n4" aria-selected="false">4xx</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#n5" role="tab" aria-controls="n5" aria-selected="false">5xx</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#n6" role="tab" aria-controls="n6" aria-selected="false">6xx</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#n7" role="tab" aria-controls="n7" aria-selected="false">7xx</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#n8" role="tab" aria-controls="n8" aria-selected="false">8xx</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#n9" role="tab" aria-controls="n9" aria-selected="false">9xx</a>
+                          </li>
+                      </ul>
+                      <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="n0" role="tabpanel" aria-labelledby="home-tab">
+                            
+                        </div>
+                        <div class="tab-pane fade" id="n1" role="tabpanel" aria-labelledby="profile-tab">
+                        </div>
+                        <div class="tab-pane fade" id="n2" role="tabpanel" aria-labelledby="contact-tab">
+                        </div>
+                        <div class="tab-pane fade" id="n3" role="tabpanel" aria-labelledby="contact-tab">
+                        </div>
+                        <div class="tab-pane fade" id="n4" role="tabpanel" aria-labelledby="contact-tab">
+                        </div>
+                        <div class="tab-pane fade" id="n5" role="tabpanel" aria-labelledby="contact-tab">
+                        </div>
+                        <div class="tab-pane fade" id="n6" role="tabpanel" aria-labelledby="contact-tab">
+                        </div>
+                        <div class="tab-pane fade" id="n7" role="tabpanel" aria-labelledby="contact-tab">
+                        </div>
+                        <div class="tab-pane fade" id="n8" role="tabpanel" aria-labelledby="contact-tab">
+                        </div>
+                        <div class="tab-pane fade" id="n9" role="tabpanel" aria-labelledby="contact-tab">
+                        </div>
+                      </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</body>
+<script>
+
+    function select_badge(val){
+        $('#myModal').modal('hide');
+        $("#badge_number").val(val)
+
+    }
+
+    $(function () {
+        //绑定相关事件
+        $("#badge_number").bind("change", function () {
+            let badge_number = $(this).val();
+            $.ajax({
+                url: "/recommend_badge",
+                method: "POST",
+                data: JSON.stringify({ badge_number }),
+                headers: {
+                    "content-type": "application/json"
+                },
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+            //获取值并判断
+
+        });
+
+        $("#btn_query_badge").bind("click", function () {
+            $.ajax({
+                url: "/query_available_badge",
+                method: "POST",
+                success: function (data) {
+                    for(var i=0;i<10;i++){
+                        let rangeData = data[''+i]
+                        var htmlContent = '';
+                        rangeData.forEach(element => {
+                            htmlContent = htmlContent + `<button onclick="select_badge('${element}')" type="button" class="btn btn-primary badge-tag-btn">${element}</button>`;
+                        });
+                        $("#n"+i).html(htmlContent);
+                    }
+                    $('#myModal').modal('show');
+                }
+            });
+
+        })
+    })
+</script>
+
+</html>
